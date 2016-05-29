@@ -66,3 +66,5 @@ make all && make install
 
 # Install BigchainDB
 CFLAGS='-I /opt/openssl-1.0.1s/src/include' LDFLAGS='-L /opt/openssl-1.0.1s/build/lib -Wl,-rpath=/opt/openssl-1.0.1s/build/lib' pip --no-cache-dir install bigchaindb
+bigchaindb configure
+rethinkdb --daemon && bigchaindb start
