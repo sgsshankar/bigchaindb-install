@@ -53,7 +53,7 @@ curl https://bootstrap.pypa.io/get-pip.py | python3.4
 # Install Rethinkdb
 cd /tmp
 wget http://download.rethinkdb.com/centos/`cut -d ' ' -f 4 /etc/centos-release | cut -d '.' -f 1`/`uname -m`/rethinkdb.repo -O /etc/yum.repos.d/rethinkdb.repo
-yum install rethinkdb
+yum install -y rethinkdb
 
 # Install OpenSSL with ECC
 mkdir -p /opt/openssl-1.0.1s/build; cd /opt/openssl-1.0.1s
