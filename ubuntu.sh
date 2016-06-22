@@ -1,4 +1,5 @@
 #!/bin/bash
+# Install Bigchaindb on Ubuntu
 
 # The MIT License (MIT)
 
@@ -22,10 +23,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-if [ -f /etc/centos-release ] ; then
-	sudo ./centos.sh
-elif [ -f /etc/redhat-release ] ; then
-    sudo ./centos.sh
-elif [ -f /etc/lsb-release ] ; then
-    sudo ./ubuntu.sh
-fi
+
+# Update the system
+apt-get -y update
+
+# Install development packages required for compiling python and beyond
+apt-get -y install libffi-dev g++ gcc gcc-c++ libssl-dev
+apt-get -y install python3-dev python-pip python-virtualenv
+
+# Install Rethinkdb
+source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main" | tee /etc/apt/sources.list.d/rethinkdb.list  
+wget -qO- https://download.rethinkdb.com/apt/pubkey.gpg | apt-key add -  
+apt-get -y update
+apt-get -y install rethinkdb
+
+# Install BigchainDB
+virtualenv -p python3.4 env
+source env/bin/activate
+pip install bigchaindb
+bigchaindb -y configure
+rethinkdb --daemon && bigchaindb start
